@@ -22,4 +22,8 @@ public class BookEntity {
         this.title = title;
         this.author = author;
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }
