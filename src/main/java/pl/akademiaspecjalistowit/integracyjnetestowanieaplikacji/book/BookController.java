@@ -2,8 +2,11 @@ package pl.akademiaspecjalistowit.integracyjnetestowanieaplikacji.book;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import pl.akademiaspecjalistowit.integracyjnetestowanieaplikacji.notification.NotificationService;
 
 
 @RestController
@@ -17,8 +20,8 @@ public class BookController {
     }
 
     @PostMapping
-    public void createBook(@RequestBody BookDto book) {
-        bookService.createBook(book);
+    public void createBook(@RequestBody BookDto book, @RequestHeader(value = "Client", required = true) String client) {
+        bookService.createBook(book, client);
     }
 
     @GetMapping
@@ -30,7 +33,7 @@ public class BookController {
     public ResponseEntity<BookDto> getBookById(@PathVariable Long id) {
         Optional<BookDto> book = bookService.getBookById(id);
         return book.map(ResponseEntity::ok)
-            .orElseGet(() -> ResponseEntity.notFound().build());
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
 }
