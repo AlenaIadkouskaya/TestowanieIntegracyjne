@@ -68,4 +68,22 @@ class BookControllerIntegrationTest {
                 .andExpect(content().json(objectMapper.writeValueAsString(book)));
     }
 
+    @Test
+    public void shouldCreateBookAndNotification() throws Exception {
+        //given
+        BookDto book = new BookDto("Spring Boot", "John Doe");
+
+        //when then
+        mockMvc.perform(post("/books")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(book)))
+                .andExpect(status().isOk());
+
+        //when then
+        mockMvc.perform(get("/books/1"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.title").value("Spring Boot"))
+                .andExpect(content().json(objectMapper.writeValueAsString(book)));
+    }
+
 }
