@@ -47,6 +47,7 @@ class BookControllerIntegrationTest {
 
         //when then
         mockMvc.perform(post("/books")
+                        .header("Client", "Name of client")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(book)))
                 .andExpect(status().isOk());
@@ -59,6 +60,7 @@ class BookControllerIntegrationTest {
 
         //when then
         mockMvc.perform(post("/books")
+                        .header("Client", "Name of client")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(book)))
                 .andExpect(status().isOk());
